@@ -11,6 +11,32 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id/resources", (req, res) => {
+  const { id } = req.params
+
+  DB.getProjectResources(id)
+  .then(pResources => {
+    
+    res.status(200).json(pResources)
+  }).catch((err) => {
+    
+    res.status(500).json({ message: "Failed to get project resources"});
+  });
+})
+
+router.get("/:id/tasks", (req, res) => {
+  const { id } = req.params
+
+  DB.getProjectTasks(id)
+  .then(pTasks => {
+    
+    res.status(200).json(pTasks)
+  }).catch((err) => {
+    
+    res.status(500).json({ message: "Failed to get project tasks"});
+  });
+})
+
 router.post("/", validateProject, (req, res) => {
   DB.addProject(req.body)
     .then((newProject) => {
